@@ -1,7 +1,7 @@
-import Stripe from "stripe";
-import config from "../config";
+const Stripe = require("stripe");
+const config = require("../../config");
 
-const API_KEY = config.billing.stripeApiKey;
+const API_KEY = config?.billing?.stripeApiKey;
 
 const initStripe = (apiKey) => {
     const client = new Stripe(apiKey);
@@ -9,13 +9,13 @@ const initStripe = (apiKey) => {
     return client;
 };
 
-export const stripe = initStripe(API_KEY);
+const stripe = initStripe(API_KEY);
 
-export const getUserSubscriptions = (customer) => stripe.subscriptions.list({customer});
+const getUserSubscriptions = (customer) => stripe.subscriptions.list({customer});
 
-export const getSubscriptionByID = (id) => stripe.subscriptions.retrieve(id);
+const getSubscriptionByID = (id) => stripe.subscriptions.retrieve(id);
 
-export const getUserSubscriptionByID = async (
+const getUserSubscriptionByID = async (
     subscriptionID,
     customer,
 ) => {
@@ -27,9 +27,9 @@ export const getUserSubscriptionByID = async (
     return subscription;
 };
 
-export const createCustomer = (email) => stripe.customers.create({email});
+const createCustomer = (email) => stripe.customers.create({email});
 
-export const createSubscription = ({
+const createSubscription = ({
     customer,
     coupon,
     trial_period_days = 5,
@@ -39,7 +39,7 @@ export const createSubscription = ({
     trial_period_days,
 });
 
-export const changeSubscription = ({
+const changeSubscription = ({
     subscriptionId,
     plan,
 }) => stripe.subscriptions.update(subscriptionId, {
@@ -48,7 +48,7 @@ export const changeSubscription = ({
 
 const getSubscriptionItems = (subscription) => stripe.subscriptionItems.list({subscription});
 
-export const changeEmailStripe = ({
+const changeEmailStripe = ({
     customerID,
     email,
 }) => stripe.customers.update(customerID, {email});
@@ -64,7 +64,7 @@ const createSubscriptionItem = ({
 
 const delSubscriptionItem = (subscriptionItem) => stripe.subscriptionItems.del(subscriptionItem);
 
-export const changeSubscriptionPlan = async ({
+const changeSubscriptionPlan = async ({
     subscription,
     plan,
 }) => {
@@ -74,3 +74,15 @@ export const changeSubscriptionPlan = async ({
     await createSubscriptionItem({subscription, plan});
     return getSubscriptionByID(subscription);
 };
+
+module.exports = {
+    stripe,
+    getUserSubscriptions,
+    getSubscriptionByID,
+    getUserSubscriptionByID,
+    createCustomer,
+    createSubscription,
+    changeSubscription,
+    changeEmailStripe,
+    changeSubscriptionPlan
+}

@@ -1,29 +1,29 @@
-import logger from "../../config/logger";
-import LoggerConstant from "./loggerConstant";
-const winston = logger();
+const { loggerCreate } = require("../../config/logger");
+const winston = loggerCreate()
+const { loggerConstant } = require("./loggerConstant");
 
-export default class Logger {
-    static error(error) {
+class logger {
+    error(error) {
         winston.log({
             message: error,
             label: this.getFixedPathFile(),
-            level: LoggerConstant.LOG_LEVEL_ERROR,
+            level: loggerConstant.LOG_LEVEL_ERROR,
         });
     }
 
-    static info(message) {
+    info(message) {
         winston.log({
             message,
             label: this.getFixedPathFile(),
-            level: LoggerConstant.LOG_LEVEL_INFO,
+            level: loggerConstant.LOG_LEVEL_INFO,
         });
     }
 
-    static debug(message) {
+    debug(message) {
         winston.log({
             message: `###${message}`,
             label: this.getFixedPathFile(),
-            level: LoggerConstant.LOG_LEVEL_DEBUG,
+            level: loggerConstant.LOG_LEVEL_DEBUG,
         });
     }
 
@@ -36,4 +36,8 @@ export default class Logger {
             return `${path[path.length - 2]}/${path[path.length - 1]}`.trim();
         }
     }
+}
+
+module.exports = {
+    logger
 }
