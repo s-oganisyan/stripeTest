@@ -10,10 +10,14 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb": "^18.2.1",
     "express": "~4.16.1",
     "mongoose": "^5.9.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mongoose-model-format": "^1.0.0",
+    "moment": "^2.24.0",
+    "stripe": "^8.137.0"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.3",
