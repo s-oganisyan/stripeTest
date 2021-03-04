@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
-const { logger } = require("../../../cors/logger");
+const { logger } = require("../../../core/logger");
 
 const createSubscription = async (subscription) => {
     logger.log("on customer subscription created", subscription);

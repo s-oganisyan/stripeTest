@@ -1,6 +1,6 @@
 const {HANDLERS} = require("./constants");
-const { stripe } = require("../../cors/loaders/stripe");
-const { logger } = require("../../cors/logger");
+const { stripe } = require("../../core/loaders/stripe");
+const { logger } = require("../../core/logger");
 
 const makeOnStripe = async (event) => {
     try {
