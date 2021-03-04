@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
+const { logger } = require("../../../cors/logger");
 
-const createSubscription = (services) => async (subscription) => {
-    console.log("services12345", services);
-
-    console.log("on customer subscription created", subscription);
+const createSubscription = async (subscription) => {
+    logger.log("on customer subscription created", subscription);
 
     if (subscription.status !== "active") {
         return {statusCode: 200};
@@ -27,10 +26,8 @@ const createSubscription = (services) => async (subscription) => {
         subscriptionId: stripeCustomerID,
     })
     const savedUser = await user.save();
-    console.log(savedUser, "savedUser1233")
-
     if (savedUser.errors) {
-        console.log("when create customer", savedUser.errors);
+        logger.log("when create customer", savedUser.errors);
         return {statusCode: 500};
     }
 

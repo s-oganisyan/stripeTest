@@ -5,7 +5,6 @@ const API_KEY = config?.billing?.stripeApiKey;
 
 const initStripe = (apiKey) => {
     const client = new Stripe(apiKey);
-    // client.setMaxNetworkRetries(2);
     return client;
 };
 
