@@ -1,42 +1,37 @@
 const {HANDLERS} = require("./constants");
-const { stripe, services } = require("../../cors/loaders/stripe");
-// const { logger } = require("../../cors/logger");
+const { stripe } = require("../../cors/loaders/stripe");
+const { logger } = require("../../cors/logger");
 
 const makeOnStripe = async (event) => {
-    console.log("0000000000")
-    // const {stripe, logger} = services;
     try {
         const eventBody = event.body;
         const signature = event.headers["Stripe-Signature"] || "";
-        console.log("validate event and extract body", {eventBody, signature});
+        logger.log("validate event and extract body", {eventBody, signature});
         const body = stripe.extractEvent(eventBody, signature);
-        console.log("111111111111")
-
 
         switch (body.type) {
         case "charge.refunded":
-            return HANDLERS.charge[body.type](services)(body.data.object,);
+            return HANDLERS.charge[body.type](body.data.object,);
 
         case "customer.subscription.created":
         case "customer.subscription.deleted":
         case "customer.subscription.updated":
-            return HANDLERS.subscription[body.type](services)(body.data.object,);
+            return HANDLERS.subscription[body.type](body.data.object,);
 
         case "invoice.paid":
         case "invoice.finalized":
         case "invoice.payment_failed":
-            return HANDLERS.invoice[body.type](services)(body.data.object,);
+            return HANDLERS.invoice[body.type](body.data.object,);
 
         case "payment_intent.succeeded":
-            return HANDLERS.paymentIntent[body.type](services)(body.data.object,);
+            return HANDLERS.paymentIntent[body.type](body.data.object,);
 
         default:
-            console.err("Unprocessed webhook", body);
+            logger.err("Unprocessed webhook", body);
             return {statusCode: 400};
         }
     } catch (error) {
-        console.log(error, "error12345")
-        console.err("when processing event", {event, error});
+        logger.err("when processing event", {event, error});
         return {statusCode: 400, body: `Webhook Error: ${error.message}`};
     }
 };
