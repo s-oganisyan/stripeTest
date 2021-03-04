@@ -1,12 +1,12 @@
 
-import makeOnChargeRefunded from "./onChargeRefunded";
-import makeOnCustomerSubscriptionCreated from "./onCustomerSubscriptionCreated";
-import makeOnCustomerSubscriptionDeleted from "./onCustomerSubscriptionDeleted";
-import makeOnCustomerSubscriptionUpdated from "./onCustomerSubscriptionUpdated";
-import makeOnInvoicePaid from "./onInvoicePaid";
-import makeOnInvoiceFinalized from "./onInvoiceFinalized";
-import makeOnPaymentFailed from "./onPaymentFailed";
-import makeOnPaymentIntentSucceeded from "./onPaymentIntentSucceeded";
+const makeOnChargeRefunded = require("./handlers/onChargeRefunded"),
+    { makeOnCustomerSubscriptionCreated } = require("./handlers/onCustomerSubscriptionCreated"),
+    { makeOnCustomerSubscriptionDeleted } = require("./handlers/onCustomerSubscriptionDeleted"),
+    { makeOnCustomerSubscriptionUpdated } = require("./handlers/onCustomerSubscriptionUpdated"),
+    { makeOnInvoicePaid } = require("./handlers/onInvoicePaid"),
+    { makeOnInvoiceFinalized } = require("./handlers/onInvoiceFinalized"),
+    { makeOnPaymentFailed } = require("./handlers/onPaymentFailed"),
+    { makeOnPaymentIntentSucceeded } = require("./handlers/onPaymentIntentSucceeded");
 
 const HANDLERS = {
     charge: {
