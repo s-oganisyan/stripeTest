@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "lib": [
+      "es2017",
+    ],
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "sourceMap": true
+  },
+}
