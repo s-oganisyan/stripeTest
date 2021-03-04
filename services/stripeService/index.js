@@ -1,12 +1,16 @@
 const {HANDLERS} = require("./constants");
+const { stripe, logger, services } = require("../../cors/loaders/stripe");
 
-export const makeOnStripe = (services) => async (event) => {
-    const {stripe, logger} = services;
+const makeOnStripe = async (event) => {
+    console.log("0000000000")
+    // const {stripe, logger} = services;
     try {
         const eventBody = event.body;
         const signature = event.headers["Stripe-Signature"] || "";
         logger.log("validate event and extract body", {eventBody, signature});
         const body = stripe.extractEvent(eventBody, signature);
+        console.log("111111111111")
+
 
         switch (body.type) {
         case "charge.refunded":
@@ -30,7 +34,12 @@ export const makeOnStripe = (services) => async (event) => {
             return {statusCode: 400};
         }
     } catch (error) {
+        console.log(error, "error12345")
         logger.err("when processing event", {event, error});
         return {statusCode: 400, body: `Webhook Error: ${error.message}`};
     }
 };
+
+module.exports = {
+    makeOnStripe
+}
