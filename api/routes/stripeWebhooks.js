@@ -1,8 +1,7 @@
 const express = require("express");
-//const stripeController = require('../../cors/subsription/stripeController');
 
 const router = express.Router();
 
-router.get("/helth-check", ({res}) => res.send("API is OK!"));
+router.post("/stripe-webhooks", ({res}) => res.send("API is OK!"));
 
 module.exports = router;
